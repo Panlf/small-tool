@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.RandomAccessFile;
 
-public class ReadFile {
+public class ReadFileLineNumber {
 
 	public static void main(String[] args) throws Exception {
 		/*
@@ -21,7 +21,7 @@ public class ReadFile {
 
 	 public static void Test() throws IOException{
 		 RandomAccessFile file = new RandomAccessFile(
-					ReadFile.class.getClassLoader().getResource("number.txt").getFile(), "r");
+				 ReadFileLineNumber.class.getClassLoader().getResource("number.txt").getFile(), "r");
 			file.seek(10);
 			byte[] bs = new byte[1024];
 			int len = file.read(bs);
@@ -35,7 +35,7 @@ public class ReadFile {
 	        byte[] bytes=new byte[to-from+1];
 	        BufferedInputStream bis = null;
 	        try{
-	            FileInputStream fis=new FileInputStream(ReadFile.class.getClassLoader().getResource("number.txt").getFile());
+	            FileInputStream fis=new FileInputStream(ReadFileLineNumber.class.getClassLoader().getResource("number.txt").getFile());
 	            bis=new BufferedInputStream(fis);
 	            bis.skip(from-1);
 	            bis.read(bytes, 0, to-from+1);
