@@ -1,5 +1,7 @@
 package com.utils;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,8 +13,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Test;
 
 public class CreatFile {
 

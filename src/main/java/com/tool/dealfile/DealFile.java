@@ -5,9 +5,8 @@ import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import org.junit.Test;
-
 import com.tool.readfile.ReadFileLineNumber;
+import org.junit.jupiter.api.Test;
 
 
 public class DealFile {
