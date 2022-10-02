@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class FileUtils {
 
@@ -19,15 +20,15 @@ public class FileUtils {
      * @return
      * @throws IOException
      */
-    public static boolean renameFile(String filePath) throws IOException {
+    public static boolean renameFile(String filePath, UnaryOperator<String> unaryOperator) throws IOException {
         File oldFile = new File(filePath);
         if(!oldFile.exists()) {
             return false;
         }
         String rootPath = oldFile.getParent();
         String fileName = oldFile.getName();
-        // 具体修改文件名的方法
-        String newFileName = fileName.replace("1 (","").replace(")","");
+        // 具体修改文件名的方法 函数式 方式修改
+        String newFileName = unaryOperator.apply(fileName);
 
         String newPath = rootPath+"\\"+newFileName;
         File newFile = new File(newPath);
@@ -109,5 +110,19 @@ public class FileUtils {
             return "";
         }
         return content.toLowerCase();
+    }
+
+
+    /**
+     * 测试方法 -- 仅供查看
+     */
+    public void renameFile(){
+        UnaryOperator<String> unaryOperator = s -> s.replace("--","");
+
+        try {
+            FileUtils.renameFile("C:\\Users\\Breeze\\Desktop\\11\\1--1.txt",unaryOperator);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
