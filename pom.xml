@@ -9,6 +9,7 @@
 	<modules>
 		<module>tool-odps</module>
 		<module>tool-jdbc</module>
+		<module>tool-common</module>
 	</modules>
 
 	<properties>
@@ -22,6 +23,18 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.22</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.83</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>5.7.14</version>
 		</dependency>
 	</dependencies>
 </project>
