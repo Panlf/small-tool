@@ -1,4 +1,4 @@
-package com.plf.tool.jdbc.config.utils;
+package com.plf.tool.jdbc.utils;
 
 import lombok.Getter;
 

@@ -10,6 +10,7 @@ public class DataSourceConfig {
     public static DataSource createDataConfig(String driverClassName,String jdbcUrl,String username,String password,boolean isNeedAutoCommit){
         BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(driverClassName);
+        //?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&useSSL=true&characterEncoding=utf8
         config.setJdbcUrl(jdbcUrl);
         config.setUsername(username);
         config.setPassword(password);
