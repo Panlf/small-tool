@@ -27,7 +27,7 @@ hs_err_pid*
 target/
 
 # java version
-pom.xml
+/pom.xml
 
 # Involve work privacy
 **/src/test/
