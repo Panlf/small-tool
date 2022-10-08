@@ -26,4 +26,8 @@ hs_err_pid*
 .idea/
 target/
 
+# java version
+pom.xml
+
+# Involve work privacy
 **/src/test/
