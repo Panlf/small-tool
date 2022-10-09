@@ -7,23 +7,25 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class OkHttpUtils {
     private static volatile OkHttpClient okHttpClient = null;
     private static volatile Semaphore semaphore = null;
+    private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
     private Map<String, String> headerMap;
     private Map<String, String> paramMap;
     private String url;
     private Request.Builder request;
+    private Map<String, File> fileMap;
+
 
     /**
      * 初始化okHttpClient，并且允许https访问
@@ -40,6 +42,17 @@ public class OkHttpUtils {
                             .sslSocketFactory(createSSLSocketFactory(trustManagers), (X509TrustManager) trustManagers[0])
                             .hostnameVerifier((hostName, session) -> true)
                             .retryOnConnectionFailure(true)
+                            .cookieJar(new CookieJar() {
+                                @Override
+                                public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
+                                    cookieStore.put(httpUrl.host(), list);
+                                }
+                                @Override
+                                public List<Cookie> loadForRequest(HttpUrl httpUrl) {
+                                    List<Cookie> cookies = cookieStore.get(httpUrl.host());
+                                    return cookies != null ? cookies : new ArrayList<Cookie>();
+                                }
+                            })
                             .build();
                     addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36");
                 }
@@ -98,6 +111,23 @@ public class OkHttpUtils {
     }
 
     /**
+     * 添加文件
+     *
+     * @param key   参数名
+     * @param value 参数值
+     * @return
+     */
+    public OkHttpUtils addFile(String key, File value) {
+        if (fileMap == null) {
+            fileMap = new LinkedHashMap<>(16);
+        }
+        fileMap.put(key, value);
+        return this;
+    }
+
+
+
+    /**
      * 添加请求头
      *
      * @param key   参数名
@@ -124,9 +154,9 @@ public class OkHttpUtils {
             urlBuilder.append("?");
             try {
                 for (Map.Entry<String, String> entry : paramMap.entrySet()) {
-                    urlBuilder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8)).
+                    urlBuilder.append(URLEncoder.encode(entry.getKey(), "utf-8")).
                             append("=").
-                            append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8)).
+                            append(URLEncoder.encode(entry.getValue(), "utf-8")).
                             append("&");
                 }
             } catch (Exception e) {
@@ -153,7 +183,6 @@ public class OkHttpUtils {
                 json = JSON.toJSONString(paramMap);
             }
             requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
-            System.out.println(json);
         } else {
             FormBody.Builder formBody = new FormBody.Builder();
             if (paramMap != null) {
@@ -161,7 +190,31 @@ public class OkHttpUtils {
             }
             requestBody = formBody.build();
         }
+
         request = new Request.Builder().post(requestBody).url(url);
+        return this;
+    }
+
+
+
+    /**
+     * 初始化post方法
+     *
+     * @return
+     */
+    public OkHttpUtils postFile() {
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+
+        if(fileMap!=null){
+            fileMap.forEach((k,v)->{
+                multipartBodyBuilder.addFormDataPart(k,
+                        v.getName(),
+                        RequestBody.create(MediaType.parse("multipart/form-data"),
+                                v));
+            });
+        }
+        request = new Request.Builder().post(multipartBodyBuilder.build()).url(url);
         return this;
     }
 
@@ -186,7 +239,7 @@ public class OkHttpUtils {
      * 异步请求，有返回值
      */
     public String async() {
-        StringBuilder buffer = new StringBuilder();
+        StringBuilder buffer = new StringBuilder("");
         setHeader(request);
         okHttpClient.newCall(request.build()).enqueue(new Callback() {
             @Override
@@ -283,8 +336,6 @@ public class OkHttpUtils {
                 }
         };
     }
-
-
     /**
      * 自定义一个接口回调
      */
@@ -296,4 +347,5 @@ public class OkHttpUtils {
 
     }
 }
+
 
