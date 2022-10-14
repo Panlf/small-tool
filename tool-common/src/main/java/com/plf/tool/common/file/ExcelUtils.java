@@ -15,7 +15,7 @@ public class ExcelUtils {
      * @param sheet
      * @return
      */
-    public List<Map<String,Object>> readMap(String filePath,String sheet){
+    public static List<Map<String,Object>> readMap(String filePath,String sheet){
         ExcelReader reader = ExcelUtil.getReader(FileUtil.file(filePath), sheet);
         return reader.readAll();
     }
