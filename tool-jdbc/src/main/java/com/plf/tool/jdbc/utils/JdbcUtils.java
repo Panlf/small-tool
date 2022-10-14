@@ -1,5 +1,7 @@
 package com.plf.tool.jdbc.utils;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.sql.*;
 import java.util.*;
 
@@ -191,12 +193,17 @@ public class JdbcUtils {
      * @param connection
      * @return
      */
-    public Map<String,String> getAllTableAndComment(Connection connection) {
+    public Map<String,String> getAllTableAndComment(Connection connection,String schema) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Map<String,String>  result = new LinkedHashMap<>();
         try {
             String sql = "SELECT TABLE_NAME,TABLE_COMMENT FROM information_schema.tables";
+
+            if(StrUtil.isNotEmpty(schema)){
+                sql += " where TABLE_SCHEMA='"+schema+"'";
+            }
+
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

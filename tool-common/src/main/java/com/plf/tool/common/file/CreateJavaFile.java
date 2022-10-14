@@ -21,7 +21,6 @@ public class CreateJavaFile {
      * @throws ClassNotFoundException
      */
     public void test() throws IOException, ClassNotFoundException {
-
 		/*List<String> list = getClassByPackageName("com.bean");
 		System.out.println(list);
 
