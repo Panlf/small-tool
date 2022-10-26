@@ -246,7 +246,9 @@ public class JdbcUtils {
         if(autoCloseables!=null && autoCloseables.length>0){
             Arrays.stream(autoCloseables).forEach(autoCloseable -> {
                 try {
-                    autoCloseable.close();
+                    if(autoCloseable!=null){
+                        autoCloseable.close();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
