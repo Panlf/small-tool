@@ -10,6 +10,7 @@ import com.aliyun.odps.task.SQLTask;
 import com.plf.tool.odps.dto.ColumnBaseInfo;
 import com.plf.tool.odps.dto.TableInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,5 +152,21 @@ public class OdpsUtils {
             return list.get(0).getColumnBaseInfoList();
         }
         return null;
+    }
+
+    /**
+     * 查询数据
+     *
+     * @param odps
+     * @param sql
+     * @return
+     * @throws OdpsException
+     */
+    public static Map<String, Object> selectOne(Odps odps, String sql) throws OdpsException {
+        List<Map<String, Object>>  list = select(odps,sql);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 }
