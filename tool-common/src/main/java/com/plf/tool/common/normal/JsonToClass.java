@@ -2,7 +2,6 @@ package com.plf.tool.common.normal;
 
 import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.istack.internal.NotNull;
 
 import java.util.Map;
 
@@ -13,7 +12,7 @@ public class JsonToClass {
             .put("java.lang.String","String")
             .build();
 
-    public static String jsonToClass(@NotNull JSONObject jsonObject){
+    public static String jsonToClass(JSONObject jsonObject){
         StringBuffer stringBuffer = new StringBuffer();
         jsonObject.forEach((k,v)->{
             String type = "String";

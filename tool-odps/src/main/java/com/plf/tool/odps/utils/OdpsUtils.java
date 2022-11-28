@@ -1,11 +1,16 @@
 package com.plf.tool.odps.utils;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.aliyun.odps.*;
 import com.aliyun.odps.account.Account;
 import com.aliyun.odps.account.AliyunAccount;
 import com.aliyun.odps.data.Record;
 import com.aliyun.odps.task.SQLTask;
+import com.plf.tool.odps.dto.ColumnBaseInfo;
+import com.plf.tool.odps.dto.TableInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,5 +89,84 @@ public class OdpsUtils {
             arr.add(map);
         }
         return arr;
+    }
+
+    /**
+     * 获取表信息
+     * @param project
+     * @param tableName
+     * @param odps
+     * @return
+     */
+    public static List<TableInfo> listTableAllInfo(String project, String tableName, Odps odps) {
+        List<TableInfo> list = new ArrayList<>();
+        //获取该空间下所有的表
+        Tables tables = odps.tables();
+
+        for (Table table : tables) {
+            if (StrUtil.isNotEmpty(tableName) && !table.getName().equals(tableName)) {
+                continue;
+            }
+            TableInfo tableInfo = new TableInfo();
+            //是否是视图
+            if (table.isVirtualView()) {
+                tableInfo.setType(1);
+            } else {
+                tableInfo.setType(0);
+            }
+            tableInfo.setProject(project);
+            tableInfo.setTableName(table.getName());
+            tableInfo.setTableComment(table.getComment());
+            tableInfo.setColumnBaseInfoList(findAllColumnInfo(table));
+            list.add(tableInfo);
+        }
+        return list;
+    }
+
+    private static List<ColumnBaseInfo> findAllColumnInfo(Table table) {
+        List<ColumnBaseInfo> list = new ArrayList<>();
+
+        TableSchema tableSchema = table.getSchema();
+        List<Column> columnList = tableSchema.getColumns();
+
+        for (Column column : columnList) {
+            ColumnBaseInfo columnBaseInfo = new ColumnBaseInfo();
+            columnBaseInfo.setColumnName(column.getName());
+            columnBaseInfo.setComment(column.getComment());
+            columnBaseInfo.setType(column.getTypeInfo().getTypeName());
+            list.add(columnBaseInfo);
+        }
+        return list;
+    }
+
+
+    /**
+     * 获取单表的字段信息
+     * @param odps
+     * @param tableName
+     * @return
+     */
+    public static List<ColumnBaseInfo> getOneTable(Odps odps,String tableName) {
+        List<TableInfo>  list =  listTableAllInfo(null,tableName,odps);
+        if(CollectionUtil.isNotEmpty(list)){
+            return list.get(0).getColumnBaseInfoList();
+        }
+        return null;
+    }
+
+    /**
+     * 查询数据
+     *
+     * @param odps
+     * @param sql
+     * @return
+     * @throws OdpsException
+     */
+    public static Map<String, Object> selectOne(Odps odps, String sql) throws OdpsException {
+        List<Map<String, Object>>  list = select(odps,sql);
+        if(CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        return list.get(0);
     }
 }
