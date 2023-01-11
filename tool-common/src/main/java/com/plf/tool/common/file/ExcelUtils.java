@@ -23,6 +23,11 @@ public class ExcelUtils {
         return reader.readAll();
     }
 
+    public static <T> void writeOneRow(ExcelWriter writer,int column,RowInfo<T> rowInfo){
+        writer.writeCellValue(rowInfo.getRowIndex(),column,rowInfo.getData());
+    }
+
+
     /**
      * 导出Excel文件
      * @param excelPath 输出地址
@@ -31,11 +36,13 @@ public class ExcelUtils {
      * @param title 标题行
      * @param mergeColumn 标题行需要合并的列数
      */
-    public  static <T>  void  exportExcel(String excelPath,
+    public static <T> void exportExcel(String excelPath,
                                           List<T> data,
                                           Map<String,String> alias,
                                           String title,
                                           int mergeColumn){
+        // 不启用默认样式
+        // excelWriter.disableDefaultStyle();
         ExcelWriter writer = ExcelUtil.getWriter(excelPath);
         writer.setOnlyAlias(true);
 
