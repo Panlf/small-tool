@@ -6,20 +6,13 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 新建Java文件
  */
 public class CreateJavaFile {
-    /**
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
+
     public void test() throws IOException, ClassNotFoundException {
 		/*List<String> list = getClassByPackageName("com.bean");
 		System.out.println(list);
@@ -71,9 +64,7 @@ public class CreateJavaFile {
     public static List<Field> getAllFields(Class<?> clazz) {
         List<Field> list = new ArrayList<>();
         Field[] fields = clazz.getDeclaredFields();
-        for (Field f : fields) {
-            list.add(f);
-        }
+        Collections.addAll(list, fields);
         return list;
     }
 
@@ -88,6 +79,7 @@ public class CreateJavaFile {
                 File file = new File(url.getFile());
                 // 把目录下的所有文件列出
                 String[] classes = file.list();
+                assert classes != null;
                 for (String className : classes) {
                     className = className.substring(0, className.length() - 6);
                     String realName = packageName + "." + className;
@@ -120,6 +112,7 @@ public class CreateJavaFile {
             ex.printStackTrace();
         } finally {
             try {
+                assert fwriter != null;
                 fwriter.flush();
                 fwriter.close();
             } catch (IOException ex) {
