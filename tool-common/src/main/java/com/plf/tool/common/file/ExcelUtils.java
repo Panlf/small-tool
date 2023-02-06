@@ -47,9 +47,7 @@ public class ExcelUtils {
         writer.setOnlyAlias(true);
 
         if(CollectionUtil.isNotEmpty(alias)) {
-            alias.forEach((k, v) -> {
-                writer.addHeaderAlias(k, v);
-            });
+            alias.forEach(writer::addHeaderAlias);
         }
 
         if(StrUtil.isNotEmpty(title)) {
