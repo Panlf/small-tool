@@ -1,9 +1,3 @@
-# small-tool
+## small-tool
 
-平时个人/公司需要常用的小工具程序
-
-## tool-common
-
-## tool-jdbc
-
-## tool-odps
+平时个人/公司需要常用的小工具程序，核心是对第三方工具的再封装，适应本人在工作中提高效率。
