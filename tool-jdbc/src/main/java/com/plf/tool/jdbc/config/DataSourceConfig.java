@@ -7,7 +7,11 @@ import javax.sql.DataSource;
 
 public class DataSourceConfig {
 
-    public static DataSource createDataConfig(String driverClassName,String jdbcUrl,String username,String password,boolean isNeedAutoCommit){
+    public static DataSource createDataConfig(String driverClassName,
+                                              String jdbcUrl,
+                                              String username,
+                                              String password,
+                                              boolean isNeedAutoCommit){
         BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(driverClassName);
         //?serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&useSSL=true&characterEncoding=utf8
@@ -17,11 +21,13 @@ public class DataSourceConfig {
         config.setPrintRuntimeLog(true);
         config.setPrintConfigInfo(true);
         config.setDefaultAutoCommit(isNeedAutoCommit);
-        BeeDataSource ds=new BeeDataSource(config);
-        return ds;
+        return new BeeDataSource(config);
     }
 
-    public static DataSource createDataConfig(String driverClassName,String jdbcUrl,String username,String password){
+    public static BeeDataSource createDataConfig(String driverClassName,
+                                                 String jdbcUrl,
+                                                 String username,
+                                                 String password){
         BeeDataSourceConfig config = new BeeDataSourceConfig();
         config.setDriverClassName(driverClassName);
         config.setJdbcUrl(jdbcUrl);
@@ -30,7 +36,6 @@ public class DataSourceConfig {
         config.setPrintRuntimeLog(true);
         config.setPrintConfigInfo(true);
         config.setDefaultAutoCommit(true);
-        BeeDataSource ds=new BeeDataSource(config);
-        return ds;
+        return new BeeDataSource(config);
     }
 }
