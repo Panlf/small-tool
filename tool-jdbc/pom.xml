@@ -78,6 +78,12 @@
             <artifactId>hive-jdbc</artifactId>
             <version>3.1.0</version> <!-- 这里以3.1.2版本为例，可以根据实际需要进行调整 -->
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.11</version>
+        </dependency>
     </dependencies>
 
 </project>
