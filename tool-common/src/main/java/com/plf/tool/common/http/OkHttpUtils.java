@@ -25,6 +25,7 @@ public class OkHttpUtils {
     private String url;
     private Request.Builder request;
     private Map<String, File> fileMap;
+    private String paramStr;
 
 
     /**
@@ -110,6 +111,11 @@ public class OkHttpUtils {
         return this;
     }
 
+    public OkHttpUtils addParamStr(String param) {
+        paramStr = param;
+        return this;
+    }
+
     /**
      * 添加文件
      *
@@ -181,6 +187,31 @@ public class OkHttpUtils {
             String json = "";
             if (paramMap != null) {
                 json = JSON.toJSONString(paramMap);
+            }
+            requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
+        } else {
+            FormBody.Builder formBody = new FormBody.Builder();
+            if (paramMap != null) {
+                paramMap.forEach(formBody::add);
+            }
+            requestBody = formBody.build();
+        }
+
+        request = new Request.Builder().post(requestBody).url(url);
+        return this;
+    }
+
+
+    public OkHttpUtils post(boolean isJsonPost,boolean isParamStr) {
+        RequestBody requestBody;
+        if (isJsonPost) {
+            String json = "";
+            if(isParamStr){
+                json = paramStr;
+            }else {
+                if (paramMap != null) {
+                    json = JSON.toJSONString(paramMap);
+                }
             }
             requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
         } else {
