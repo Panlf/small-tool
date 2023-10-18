@@ -232,6 +232,7 @@ public class HttpClientUtils {
             }
             EntityUtils.consume(response.getEntity());
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.error("HttpClientUtil.doGet for '" + url + "' return error." + e.getMessage());
         } finally {
             try {
