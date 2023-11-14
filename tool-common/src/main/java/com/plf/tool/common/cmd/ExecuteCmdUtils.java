@@ -7,7 +7,7 @@ public class ExecuteCmdUtils {
 
     public static String executeCmd(String cmd){
         try {
-            System.out.println("开始执行===>"+cmd);
+            //System.out.println("开始执行===>"+cmd);
             String[] cmdA = { "cmd.exe", "/c", cmd };
             Process process = Runtime.getRuntime().exec(cmdA);
             LineNumberReader br = new LineNumberReader(new InputStreamReader(process.getInputStream(),"GBK"));
