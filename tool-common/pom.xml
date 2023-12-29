@@ -96,6 +96,12 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.sztech.gateway</groupId>
+            <artifactId>sz-boss-sdk</artifactId>
+            <version>1.1-RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>

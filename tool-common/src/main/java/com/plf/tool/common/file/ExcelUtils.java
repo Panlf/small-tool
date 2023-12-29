@@ -27,6 +27,9 @@ public class ExcelUtils {
         writer.writeCellValue(rowInfo.getRowIndex(),column,rowInfo.getData());
     }
 
+    public static void writeOneRow(ExcelWriter writer,int x,int y,String data){
+        writer.writeCellValue(x,y,data);
+    }
 
     /**
      * 导出Excel文件
