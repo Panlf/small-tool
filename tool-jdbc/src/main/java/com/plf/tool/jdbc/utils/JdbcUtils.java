@@ -90,6 +90,7 @@ public class JdbcUtils {
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("有异常");
         } finally {
             close(preparedStatement);
         }
