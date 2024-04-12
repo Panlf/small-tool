@@ -13,11 +13,18 @@ public class DateUtils {
         return toDate(toLocalDate(date).minusYears(1));
     }
 
-    private static Date toDate(LocalDate localDate){
+    public static Date toDate(LocalDate localDate){
         return Date.from(localDate.atStartOfDay(ZoneId.of("Asia/Shanghai")).toInstant());
     }
 
-    private static LocalDate toLocalDate(Date date){
+    public static LocalDate toLocalDate(Date date){
         return date.toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDate();
+    }
+
+    public static long getDays(Date date1, Date date2){
+        long milliseconds1 = date1.getTime();
+        long milliseconds2 = date2.getTime();
+        long diff = milliseconds2 - milliseconds1;
+        return diff / (24 * 60 * 60 * 1000);
     }
 }
