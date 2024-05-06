@@ -42,6 +42,9 @@ public class BigDecimalUtils {
      */
     public static Double calculateRatePercent(String dividend,String divisor,int scale){
         BigDecimal decimal = calculateRateTemp(dividend,divisor,scale);
+        if(decimal == null){
+            return null;
+        }
         BigDecimal multiply = decimal.multiply(new BigDecimal(100));
         return multiply.doubleValue();
     }
@@ -55,6 +58,9 @@ public class BigDecimalUtils {
      */
     public static String calculateRatePercentStr(String dividend,String divisor,int scale){
         BigDecimal decimal = calculateRateTemp(dividend,divisor,scale);
+        if(decimal == null){
+            return null;
+        }
         BigDecimal multiply = decimal.multiply(new BigDecimal(100));
         return multiply.doubleValue()+"%";
     }
