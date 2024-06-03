@@ -1,8 +1,0 @@
-jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-#改为您的数据库地址
-jdbc.url=jdbc:mysql://localhost:3306/nba?jdbc.useUnicode=true&characterEncoding=UTF-8
-#改为您用户名密码
-jdbc.username=root
-jdbc.password=root
-#自动建表使用，此处需改为您Model所在的包路径
-jdbc.packagePath=com.plf.tool.crawler.nba.model
