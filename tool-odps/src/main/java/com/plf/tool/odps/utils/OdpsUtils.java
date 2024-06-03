@@ -77,7 +77,9 @@ public class OdpsUtils {
     public static List<Map<String, Object>> select(Odps odps, String sql) throws OdpsException {
         List<Map<String, Object>> arr = new ArrayList<>();
         Instance i = SQLTask.run(odps, sql);
+
         i.waitForSuccess();
+
         List<Record> records = SQLTask.getResult(i);
         for (Record r : records) {
             Map<String, Object> map = new HashMap<String, Object>();

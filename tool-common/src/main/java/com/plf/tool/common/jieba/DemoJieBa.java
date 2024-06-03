@@ -31,7 +31,7 @@ public class DemoJieBa {
                 ,new double[]{1,1,1,0,1,1,1,1,1}));
          */
         String s1 = "我有点喜欢你";
-        String s2 = "我很喜欢你";
+        String s2 = "我不喜欢你";
         List<String> s1List = participleWord(s1);
         List<String> s2List = participleWord(s2);
         List<String> mergeList = mergeList(s1List,s2List);

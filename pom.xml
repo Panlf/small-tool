@@ -10,7 +10,6 @@
 		<module>tool-odps</module>
 		<module>tool-jdbc</module>
 		<module>tool-common</module>
-        <module>tool-crawler</module>
     </modules>
 
 	<properties>
