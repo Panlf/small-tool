@@ -46,6 +46,7 @@ class SocketCopyThread implements Runnable {
 
             while ((len = input.read(buffer)) > 0) {
                 output.write(buffer, 0, len);
+                //System.out.println(new String(buffer));
                 output.flush(); // 确保所有数据都被写入输出流
             }
         } catch (IOException e) {
