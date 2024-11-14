@@ -131,6 +131,13 @@
             <version>4.2.0</version>
             <classifier>models-chinese</classifier>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.9</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -340,7 +340,7 @@ public class OkHttpUtils {
     private static SSLSocketFactory createSSLSocketFactory(TrustManager[] trustAllCerts) {
         SSLSocketFactory ssfFactory = null;
         try {
-            SSLContext sc = SSLContext.getInstance("SSL");
+            SSLContext sc = SSLContext.getInstance("TLSv1.3");
             sc.init(null, trustAllCerts, new SecureRandom());
             ssfFactory = sc.getSocketFactory();
         } catch (Exception e) {

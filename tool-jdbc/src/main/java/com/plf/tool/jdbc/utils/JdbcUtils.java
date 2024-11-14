@@ -229,7 +229,8 @@ public class JdbcUtils {
         ResultSet resultSet = null;
         Map<String,String>  result = new LinkedHashMap<>();
         try {
-            String sql = "select COLUMN_NAME,DATA_TYPE,COLUMN_COMMENT,COLUMN_TYPE from information_schema.COLUMNS where table_name ='"+table+"'";
+            String sql = "select COLUMN_NAME,DATA_TYPE,COLUMN_COMMENT,COLUMN_TYPE from information_schema.COLUMNS " +
+                    "where table_name ='"+table+"'";
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
