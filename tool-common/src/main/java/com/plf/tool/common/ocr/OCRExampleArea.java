@@ -22,7 +22,6 @@ public class OCRExampleArea {
 
             // 定义感兴趣区域（x, y, width, height）
             Rectangle rect = new Rectangle(900, 190, 100, 50); // x, y, width, height
-            //tesseract.setRectangle(rect);
 
             // 执行 OCR 识别
             String result = tesseract.doOCR(imageFile,rect);

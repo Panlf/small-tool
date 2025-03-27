@@ -14,7 +14,7 @@ public class OCRExample {
     public static void main(String[] args) {
         // 创建 Tesseract 实例
         Tesseract tesseract = new Tesseract();
-
+        //https://github.com/tesseract-ocr/tessdata
         // 设置 Tesseract 安装路径（如果未配置环境变量）
          tesseract.setDatapath("C:\\Data\\Middleware\\Tess4j\\tessdata_fast-master");
 
