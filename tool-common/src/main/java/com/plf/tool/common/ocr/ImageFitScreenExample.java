@@ -20,7 +20,7 @@ public class ImageFitScreenExample {
             System.setProperty("sun.java2d.uiScale", "1");
 
             // 加载图片
-            BufferedImage image = ImageIO.read(new File("C:\\Users\\Breeze\\Desktop\\11.png"));
+            BufferedImage image = ImageIO.read(new File("D:\\TempData\\Video\\output\\frame_0011.png"));
             if (image == null) {
                 System.out.println("图片加载失败，请检查路径！");
                 return;

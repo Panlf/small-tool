@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
+ * 经过缩放，xy值会出现偏移
  * @author panlf
  * @date 2025/3/18
  */
@@ -16,7 +17,7 @@ public class CoordinatePicker {
     public static void main(String[] args) {
         try {
             // 加载图片
-            BufferedImage image = ImageIO.read(new File("C:\\Users\\Breeze\\Desktop\\11.png"));
+            BufferedImage image = ImageIO.read(new File("D:\\TempData\\Video\\output\\frame_0001.png"));
             if (image == null) {
                 System.out.println("图片加载失败，请检查路径！");
                 return;

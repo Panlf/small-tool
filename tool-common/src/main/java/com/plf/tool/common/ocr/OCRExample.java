@@ -7,6 +7,7 @@ import net.sourceforge.tess4j.TesseractException;
 import java.io.File;
 
 /**
+ * 图片识别
  * @author panlf
  * @date 2025/3/18
  */
@@ -16,14 +17,14 @@ public class OCRExample {
         Tesseract tesseract = new Tesseract();
         //https://github.com/tesseract-ocr/tessdata
         // 设置 Tesseract 安装路径（如果未配置环境变量）
-         tesseract.setDatapath("C:\\Data\\Middleware\\Tess4j\\tessdata_fast-master");
+         tesseract.setDatapath("D:\\TempData\\Resource\\Tessdata\\tessdata_fast-4.1.0");
 
         // 设置语言（例如中文）
         //tesseract.setLanguage("chi_sim");
 
         try {
             // 加载图片文件
-            File imageFile = new File("C:\\Users\\Breeze\\Desktop\\2.png");
+            File imageFile = new File("D:\\TempData\\Video\\output\\frame_0011.png");
 
             // 执行 OCR 识别
             String result = tesseract.doOCR(imageFile);
