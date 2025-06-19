@@ -54,6 +54,7 @@ public class OdpsUtils {
     public static long countTable(Odps odps, String sql)  {
         long count = 0;
         try {
+            log.info("countTable sql ===> {}",sql);
             Instance i = SQLTask.run(odps, sql);
             i.waitForSuccess();
             List<Record> records = SQLTask.getResult(i);
@@ -75,6 +76,7 @@ public class OdpsUtils {
      * @throws OdpsException
      */
     public static List<Map<String, Object>> select(Odps odps, String sql) throws OdpsException {
+        log.info("select sql ==> {}",sql);
         List<Map<String, Object>> arr = new ArrayList<>();
         Instance i = SQLTask.run(odps, sql);
 
