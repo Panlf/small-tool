@@ -27,7 +27,7 @@ public class ChineseWordSegmentation {
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 
         // 示例文本
-        String text = "浙江省杭州市西湖区是中国著名的旅游景点所在地。";
+        String text = "这个东西不怎么样，我不喜欢这个东西";
 
         // 创建一个空的注释对象
         Annotation document = new Annotation(text);
@@ -52,6 +52,5 @@ public class ChineseWordSegmentation {
                 System.out.println("Word: " + word + ", POS: " + pos + ", NE: " + ne);
             }
         }
-
     }
 }

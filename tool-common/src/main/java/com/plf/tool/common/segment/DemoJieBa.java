@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class DemoJieBa {
     public static void main(String[] args) throws IOException {
-        System.out.println(participleWord1("我不喜欢你"));
+        System.out.println(participleWord1("这个东西没有用，我不喜欢这个东西"));
 
         /*System.out.println(
         cosineSimilarity(
@@ -111,6 +111,4 @@ public class DemoJieBa {
         BigDecimal db = a1.divide(a2,4, BigDecimal.ROUND_HALF_UP);
         return db.doubleValue();
     }
-
-
 }
