@@ -2,6 +2,7 @@ package com.plf.tool.odps.utils;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
 import com.aliyun.odps.*;
 import com.aliyun.odps.account.Account;
 import com.aliyun.odps.account.AliyunAccount;
@@ -9,13 +10,11 @@ import com.aliyun.odps.data.Record;
 import com.aliyun.odps.task.SQLTask;
 import com.plf.tool.odps.dto.ColumnBaseInfo;
 import com.plf.tool.odps.dto.TableInfo;
+import com.plf.tool.odps.dto.TaskResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public class OdpsUtils {
@@ -51,10 +50,41 @@ public class OdpsUtils {
         return i.getTaskResults();
     }
 
+    /**
+     * 异步执行SQL语句
+     * @param odps
+     * @param sql
+     * @return
+     * @throws OdpsException
+     */
+    public static String runSQLSync(Odps odps, String sql) throws OdpsException {
+        Instance i = SQLTask.run(odps, sql);
+        return i.getId();
+    }
+
+    /**
+     * 根据jobId获取返回结果
+     * @param odps
+     * @param jobId
+     * @return
+     */
+    public TaskResult getTaskResult(Odps odps,String jobId)  {
+        TaskResult taskResult = new TaskResult();
+        try {
+            Instance i = odps.instances().get(jobId);
+            taskResult.setResult(JSON.toJSONString(i.getTaskResults()));
+            taskResult.setEndTime(i.getEndTime() == null ? new Date() : i.getEndTime());
+        } catch (OdpsException e) {
+            taskResult.setResult("异常结果码："+e.getErrorCode()+"异常结果信息："+e.getMessage());
+            taskResult.setEndTime(new Date());
+        }
+        return taskResult;
+    }
+
     public static long countTable(Odps odps, String sql)  {
         long count = 0;
         try {
-            log.info("countTable sql ===> {}",sql);
+            log.debug("countTable sql ===> {}",sql);
             Instance i = SQLTask.run(odps, sql);
             i.waitForSuccess();
             List<Record> records = SQLTask.getResult(i);
@@ -76,13 +106,18 @@ public class OdpsUtils {
      * @throws OdpsException
      */
     public static List<Map<String, Object>> select(Odps odps, String sql) throws OdpsException {
-        log.info("select sql ==> {}",sql);
+        log.debug("select sql ==> {}",sql);
+
+        if(!sql.endsWith(";")){
+            sql += ";";
+        }
         List<Map<String, Object>> arr = new ArrayList<>();
         Instance i = SQLTask.run(odps, sql);
 
         i.waitForSuccess();
 
         List<Record> records = SQLTask.getResult(i);
+
         for (Record r : records) {
             Map<String, Object> map = new HashMap<String, Object>();
             Column[] cols = r.getColumns();
@@ -157,6 +192,8 @@ public class OdpsUtils {
         }
         return null;
     }
+
+
 
     /**
      * 查询数据
